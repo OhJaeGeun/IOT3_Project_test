@@ -6,11 +6,11 @@
 
 #include "UART1.h"
 
-#define UP 65
-#define DOWN 66
-#define LEFT 68
-#define RIGHT 67
-#define STOP 32
+//#define UP 65
+//#define DOWN 66
+//#define LEFT 68
+//#define RIGHT 67
+//#define STOP 32
 
 int main(void)
 {
@@ -48,37 +48,37 @@ int main(void)
 		PORTB = 0x00;
 		data = UART1_receive();
 		
-		if(data == 'A'){ // up
-			OCR1B = 200;
-			OCR2A = 200;  
-			
-			motor_left = 0x05;  // 0000 0'1'01
-			motor_right = 0x18; // 0001 '1'000
-		}
-		else if(data == 'B'){ // down
-			OCR1B = 150;
-			OCR2A = 150;
-			
-			motor_left = 0x06;  // 0000 0'1'10
-			motor_right = 0x28; // 0010 '1'000
-		}
-		else if(data == 'C'){ // left
-			OCR1B = 100;
-			OCR2A = 100;
-			motor_left = 0x06;
-			motor_right = 0x18;
-		}
-		else if(data == 'D'){ // right
+		if(data >= 15){ // right
 			OCR1B = 100;
 			OCR2A = 100;
 			motor_left = 0x05;
 			motor_right = 0x28;
 		}
-		else if(data == 'S'){
-			OCR1B = 0;
-			OCR2A = 0;
-			motor_left = 0x00;
-			motor_right = 0x00;
+		else if(data <= -15){ // left
+			OCR1B = 100;
+			OCR2A = 100;
+			motor_left = 0x06;
+			motor_right = 0x18;
+		}
+		//else if(data == 'B'){ // down
+		//	OCR1B = 150;
+		//	OCR2A = 150;
+			
+		//	motor_left = 0x06;  // 0000 0'1'10
+		//	motor_right = 0x28; // 0010 '1'000
+		//}
+		//else if(data == 'S'){
+		//	OCR1B = 0;
+		//	OCR2A = 0;
+		//	motor_left = 0x00;
+		//	motor_right = 0x00;
+		//}
+		else{ // go
+			OCR1B = 200;
+			OCR2A = 200;  
+			
+			motor_left = 0x05;  // 0000 0'1'01
+			motor_right = 0x18; // 0001 '1'000
 		}
 	}
 	return 0;

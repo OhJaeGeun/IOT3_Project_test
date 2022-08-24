@@ -25,8 +25,8 @@ int main(void)
 
 	init_keyboard();
 	//sleep(1);
-	//if((fd = serialOpen("/dev/ttyS0", BAUD)) < 0){
-	if((fd = serialOpen("/dev/ttyAMA1", BAUD)) < 0){
+	if((fd = serialOpen("/dev/ttyS0", BAUD)) < 0){
+	//if((fd = serialOpen("/dev/ttyAMA1", BAUD)) < 0){
 		printf("Device file open error!! use sudo ...\n");
 		return 1;
 	}

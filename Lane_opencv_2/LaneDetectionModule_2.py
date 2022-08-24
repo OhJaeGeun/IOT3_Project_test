@@ -2,6 +2,11 @@ import cv2
 import numpy as np
 import utlis
 
+import serial
+from time import sleep
+
+ser = serial.Serial("/dev/ttyS0", 115200)
+
 curveList = []
 avgVal=10
 
@@ -74,9 +79,17 @@ def getLaneCurve(img, display=2):
     return curve
 
 
+# def serial_func(curve):
+#     received_data = ser.read()
+#     sleep(0.03)
+#     data_left = ser.inWaiting()
+#     received_data += ser.read(data_left)
+#     #print(received_data)
+#     ser.write(received_data)
+
+
 if __name__ == '__main__':
-    #cap = cv2.VideoCapture('vid1.mp4')
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('vid1.mp4')
 
     intialTrackBarVals = [102, 80, 20, 214]
     #intialTrackBarVals = [100, 100, 100, 100]
@@ -92,8 +105,13 @@ if __name__ == '__main__':
 
         success, img = cap.read()
         img = cv2.resize(img,(480,240))
-        curve = getLaneCurve(img,display=2)
+        curve = getLaneCurve(img,display=1)
+        curce = curve * 100 # 정수로 바꿔줌
         print(curve)
+
+        # 시리얼 통신
+        ser.write(curve)
+
 
         #cv2.imshow('Vid',img)
         cv2.waitKey(1)
